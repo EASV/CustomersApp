@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {Customer} from './customer/customer';
+import {Customer} from './customers/shared/customer.model';
+import {CustomerService} from './customers/shared/customer.service';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +10,14 @@ import {Customer} from './customer/customer';
 export class AppComponent {
 
   customers: Customer[];
-  constructor() {
-    this.customers = [
-      {firstName: 'Lars', lastName: 'Smurfi'},
-      {firstName: 'Bilbo', lastName: 'Baggins'},
-      {firstName: 'Singo', lastName: 'Dingo'}
-    ];
+  constructor(private customerService: CustomerService) {
+    // Ask for a bunch of code to execute
+    customerService.getCustomers()
+      // Executing and explaning when done let me know
+      .subscribe(
+      customers => {
+       this.customers = customers;
+      }
+    );
   }
 }
