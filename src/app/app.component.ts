@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import {Customer} from './customers/shared/customer.model';
-import {CustomerService} from './customers/shared/customer.service';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +7,5 @@ import {CustomerService} from './customers/shared/customer.service';
 })
 export class AppComponent {
 
-  customers: Customer[];
-  constructor(private customerService: CustomerService) {
-    // Ask for a bunch of code to execute
-    customerService.getCustomers()
-      // Executing and explaning when done let me know
-      .subscribe(
-      customers => {
-       this.customers = customers;
-      }
-    );
-  }
+  constructor() {}
 }

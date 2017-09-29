@@ -1,0 +1,5 @@
+<h1 >Customers</h1>
+<app-customer
+  (click)="details(customer)"
+  *ngFor="let customer of customers"
+  [customer]="customer"></app-customer>
