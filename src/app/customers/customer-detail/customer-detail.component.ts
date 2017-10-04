@@ -10,9 +10,7 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['./customer-detail.component.css']
 })
 export class CustomerDetailComponent implements OnInit {
-
   customer: Customer;
-
   constructor(private customerService: CustomerService,
               private router: Router,
               private route: ActivatedRoute) { }
@@ -28,5 +26,4 @@ export class CustomerDetailComponent implements OnInit {
           .subscribe(customer => this.customer = customer);
     });*/
   }
-
 }

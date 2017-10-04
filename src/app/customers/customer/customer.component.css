@@ -1,8 +1,8 @@
 .img{
-  float: left;
-  margin: 5px;
-  border-radius: 10px;
-}
+   float: left;
+   margin: 5px;
+   border-radius: 10px;
+ }
 .customer-border{
   border: solid 2px lightblue;
   border-radius: 10px;
