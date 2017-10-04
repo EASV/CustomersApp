@@ -11,6 +11,7 @@ import 'rxjs/add/operator/switchMap';
 })
 export class CustomerDetailComponent implements OnInit {
   customer: Customer;
+  confirmDelete= false;
   constructor(private customerService: CustomerService,
               private router: Router,
               private route: ActivatedRoute) { }
@@ -25,5 +26,19 @@ export class CustomerDetailComponent implements OnInit {
         this.customerService.getById(+params.get('id'))
           .subscribe(customer => this.customer = customer);
     });*/
+  }
+
+  delete() {
+    this.confirmDelete = true;
+  }
+
+  abortDelete() {
+    this.confirmDelete = false;
+  }
+
+  deleteConfirmed() {
+    this.customerService.delete(this.customer.id)
+      .subscribe(customer => this.router
+        .navigateByUrl('/customers'));
   }
 }

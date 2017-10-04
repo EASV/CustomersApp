@@ -38,12 +38,20 @@
             </div>
           </div>
           <div class="card-footer bg-transparent">
-            <div class="pull-right">
-              <button class="btn btn-outline-danger">
-                <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
+            <div class="pull-right" *ngIf="!confirmDelete">
+            <button class="btn btn-outline-danger" (click)="delete()">
+              <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
+            </button>
+            <button class="btn btn-outline-warning">
+              <i class="fa fa-pencil" aria-hidden="true"></i> Update
+            </button>
+          </div>
+            <div class="pull-right" *ngIf="confirmDelete">
+              <button class="btn btn-outline-danger" (click)="deleteConfirmed()">
+                <i class="fa fa-trash-o" aria-hidden="true"></i> Sure?
               </button>
-              <button class="btn btn-outline-warning">
-                <i class="fa fa-pencil" aria-hidden="true"></i> Update
+              <button class="btn btn-outline-info" (click)="abortDelete()">
+                <i class="fa fa-times" aria-hidden="true"></i> Cancel
               </button>
             </div>
           </div>
