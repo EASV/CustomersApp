@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 export class CustomerListComponent implements OnInit {
 
   customers: Customer[];
+  customerToDelete: Customer;
   constructor(private customerService: CustomerService,
               private router: Router) {
   }
@@ -30,5 +31,32 @@ export class CustomerListComponent implements OnInit {
   details(customer: Customer) {
     this.router
       .navigateByUrl('/customer/' + customer.id);
+  }
+
+  delete(customer: Customer, $event) {
+    console.log('delete Clicked');
+    this.customerToDelete = customer;
+    $event.stopPropagation();
+  }
+
+  deleteAborted($event) {
+    this.customerToDelete = null;
+    $event.stopPropagation();
+  }
+
+  deleteConfirmed($event){
+    this.customerService.delete(this.customerToDelete.id)
+      .switchMap(customer => this.customerService.get())
+      .subscribe(
+        customers => {
+          this.customers = customers;
+        }
+      );
+    $event.stopPropagation();
+  }
+
+  createCustomer() {
+    this.router
+      .navigateByUrl('/customers/create');
   }
 }
