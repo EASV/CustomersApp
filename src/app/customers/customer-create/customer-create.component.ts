@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators, ValidationErrors} from '@angular/forms';
 import {CustomerService} from '../shared/customer.service';
 import {Customer} from '../shared/customer.model';
+import {Address} from '../../addresses/shared/address.model';
 
 @Component({
   selector: 'app-customer-create',

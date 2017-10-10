@@ -50,6 +50,15 @@
               </div>
             </div>
           </label>
+          <label class="center-block col-md-12">
+            Addresses:
+            <div class="card">
+              <div class="card-body">
+                <app-address-list></app-address-list>
+              </div>
+            </div>
+
+          </label>
           <button
             [disabled]="customerGroup.invalid"
             type="submit"
@@ -62,3 +71,23 @@
     </div>
   </div>
 </div>
+
+
+<!--<form [formGroup]="addressGroup" (submit)="bazz()">
+  <div class="form-group">
+    <label class="center-block">Street:
+      <input class="form-control"
+             formControlName="street">
+    </label>
+    <label class="center-block">Number:
+      <input class="form-control"
+             formControlName="number">
+    </label>
+    <label class="center-block">City:
+      <input class="form-control"
+             formControlName="city">
+    </label>
+    <button type="submit"
+            class="btn btn-outline-warning">s</button>
+  </div>
+</form>-->

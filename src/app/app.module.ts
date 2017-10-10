@@ -10,6 +10,7 @@ import { CustomerListComponent } from './customers/customer-list/customer-list.c
 import { CustomerDetailComponent } from './customers/customer-detail/customer-detail.component';
 import { RouterModule, Routes } from '@angular/router';
 import { CustomerCreateComponent } from './customers/customer-create/customer-create.component';
+import { AddressListComponent } from './addresses/address-list/address-list.component';
 
 const appRoutes: Routes = [
   { path: 'customer/:id',
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
     AppComponent,
     CustomerListComponent,
     CustomerDetailComponent,
-    CustomerCreateComponent
+    CustomerCreateComponent,
+    AddressListComponent
   ],
   imports: [
     BrowserModule,
