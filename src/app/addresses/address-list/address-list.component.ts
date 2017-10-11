@@ -35,6 +35,17 @@ export class AddressListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.addresses = [{
+      street: 'Ostebollegade',
+      city: 'pølsehytten',
+      id: 1,
+      number: '66a'
+    }, {
+      street: 'BingoBangoStreet',
+      city: 'HomerHaven',
+      id: 2,
+      number: '770KK22kk'
+    }];
   }
 
 }
