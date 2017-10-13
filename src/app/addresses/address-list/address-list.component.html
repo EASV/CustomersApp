@@ -1,4 +1,5 @@
-<ul class="list-group">
+<p *ngIf="!addresses || addresses.length == 0">No addresses</p>
+<ul class="list-group" *ngIf="addresses && addresses.length > 0">
   <li class="list-group-item"
       *ngFor="let address of addresses; let i = index">
     <i class="fa fa-address-card-o" aria-hidden="true"></i>

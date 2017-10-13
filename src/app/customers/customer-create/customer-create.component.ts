@@ -4,6 +4,9 @@ import {FormBuilder, FormControl, FormGroup, Validators, ValidationErrors} from 
 import {CustomerService} from '../shared/customer.service';
 import {Customer} from '../shared/customer.model';
 import {Address} from '../../addresses/shared/address.model';
+import 'rxjs/add/observable/forkJoin';
+import {AddressService} from '../../addresses/shared/address.service';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-customer-create',
@@ -14,9 +17,12 @@ export class CustomerCreateComponent implements OnInit {
 
   customerGroup: FormGroup;
   customerCreatedSuccessfully= false;
+  addressesIn: Address[];
   constructor(private router: Router,
               private fb: FormBuilder,
-              private customerService: CustomerService) {
+              private customerService: CustomerService,
+              private addressService: AddressService
+              ) {
     this.customerGroup = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]]
@@ -24,6 +30,7 @@ export class CustomerCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.addressesIn = [];
   }
 
   isInvalid(controlName: string) {
@@ -45,19 +52,34 @@ export class CustomerCreateComponent implements OnInit {
   }
 
   save() {
-    const values = this.customerGroup.value;
-    const customer: Customer = {
-      firstName: values.firstName,
-      lastName: values.lastName,
-      addresses: []
-    };
-    this.customerService.create(customer)
-      .subscribe(customer => {
-        this.customerGroup.reset();
-        this.customerCreatedSuccessfully = true;
-        setTimeout(() => {
-          this.customerCreatedSuccessfully = false;
-        }, 3000);
+    // 1: Create all Addresses on the backend
+    // and store the ids returned in a []
+    const addressIds = [];
+    const addressRequests = [];
+    this.addressesIn.forEach(address => {
+      addressRequests.push(this.addressService.create(address)
+        .map(addressBack => {
+          addressIds.push(addressBack.id);
+        }));
+    });
+    Observable.forkJoin(addressRequests)
+      .subscribe(() => {
+        // 2: Add a AddressIds Array to the CustomerModel so it
+        // can be stored on the backend
+        const values = this.customerGroup.value;
+        const customer: Customer = {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          addressIds: addressIds
+        };
+        this.customerService.create(customer)
+          .subscribe(customer => {
+            this.customerGroup.reset();
+            this.customerCreatedSuccessfully = true;
+            setTimeout(() => {
+              this.customerCreatedSuccessfully = false;
+            }, 3000);
+          });
       });
   }
 }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Address} from '../shared/address.model';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
@@ -10,6 +10,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 export class AddressListComponent implements OnInit {
 
   addressGroup: FormGroup;
+  @Input()
   addresses: Address[];
   constructor(private fb: FormBuilder) {
     this.addressGroup = fb.group({
@@ -34,18 +35,6 @@ export class AddressListComponent implements OnInit {
     this.addressGroup.reset();
   }
 
-  ngOnInit() {
-    this.addresses = [{
-      street: 'Ostebollegade',
-      city: 'pølsehytten',
-      id: 1,
-      number: '66a'
-    }, {
-      street: 'BingoBangoStreet',
-      city: 'HomerHaven',
-      id: 2,
-      number: '770KK22kk'
-    }];
-  }
+  ngOnInit() {}
 
 }
