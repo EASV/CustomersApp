@@ -54,6 +54,7 @@ export class CustomerCreateComponent implements OnInit {
   save() {
     // 1: Create all Addresses on the backend
     // and store the ids returned in a []
+    const values = this.customerGroup.value;
     const addressIds = [];
     const addressRequests = [];
     this.addressesIn.forEach(address => {
@@ -63,23 +64,21 @@ export class CustomerCreateComponent implements OnInit {
         }));
     });
     Observable.forkJoin(addressRequests)
-      .subscribe(() => {
+      .switchMap(() =>
         // 2: Add a AddressIds Array to the CustomerModel so it
         // can be stored on the backend
-        const values = this.customerGroup.value;
-        const customer: Customer = {
+        this.customerService.create({
           firstName: values.firstName,
           lastName: values.lastName,
           addressIds: addressIds
-        };
-        this.customerService.create(customer)
-          .subscribe(customer => {
-            this.customerGroup.reset();
-            this.customerCreatedSuccessfully = true;
-            setTimeout(() => {
-              this.customerCreatedSuccessfully = false;
-            }, 3000);
-          });
+        })
+      ).subscribe(customer => {
+        this.customerGroup.reset();
+        this.customerCreatedSuccessfully = true;
+        this.addressesIn = [];
+        setTimeout(() => {
+          this.customerCreatedSuccessfully = false;
+        }, 3000);
       });
   }
 }
