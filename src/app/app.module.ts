@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbCarouselConfig, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { CustomerService } from './customers/shared/customer.service';
@@ -12,6 +12,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { CustomerCreateComponent } from './customers/customer-create/customer-create.component';
 import { AddressListComponent } from './addresses/address-list/address-list.component';
 import {AddressService} from './addresses/shared/address.service';
+import { NavbarComponent } from './shared/navbar/navbar.component';
+import { LandingComponent } from './landing/landing.component';
+import { LoginComponent } from './auth/login.component';
 
 const appRoutes: Routes = [
   { path: 'customer/:id',
@@ -23,8 +26,18 @@ const appRoutes: Routes = [
     component: CustomerListComponent,
     data: { title: 'Customer List' }
   },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: { title: 'Login' }
+  },
+  {
+    path: '',
+    component: LandingComponent,
+    data: { title: 'Welcome to the Customer App' }
+  },
   { path: '',
-    redirectTo: '/customers',
+    redirectTo: '/',
     pathMatch: 'full'
   }
 ];
@@ -35,7 +48,10 @@ const appRoutes: Routes = [
     CustomerListComponent,
     CustomerDetailComponent,
     CustomerCreateComponent,
-    AddressListComponent
+    AddressListComponent,
+    NavbarComponent,
+    LandingComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +62,9 @@ const appRoutes: Routes = [
   ],
   providers: [
     CustomerService,
-    AddressService],
+    AddressService,
+    NgbCarouselConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
