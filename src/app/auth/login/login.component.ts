@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 import {FormControl, FormGroup} from '@angular/forms';
+import {AuthService} from '../shared/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,10 +12,12 @@ import {FormControl, FormGroup} from '@angular/forms';
 export class LoginComponent implements OnInit {
 
   loginGroup: FormGroup;
-  constructor(config: NgbCarouselConfig) {
+  constructor(config: NgbCarouselConfig,
+              private auth: AuthService,
+              private router: Router) {
     this.loginGroup = new FormGroup({
       username: new FormControl(),
-      pw: new FormControl(),
+      password: new FormControl(),
       remember: new FormControl()
     });
     config.interval = 5000;
@@ -25,7 +29,14 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.auth.login(this.loginGroup.value).subscribe(token => {
+      if (token) {
+        this.router
+          .navigateByUrl('/');
+      } else {
 
+      }
+    });
   }
 
 

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {AuthService} from '../../auth/shared/auth.service';
+import {Router} from '@angular/router';
+import {User} from '../../auth/shared/user.model';
 
 @Component({
   selector: 'app-navbar',
@@ -8,19 +10,26 @@ import {FormControl, FormGroup} from '@angular/forms';
 })
 export class NavbarComponent implements OnInit {
 
-  loginGroup: FormGroup;
-  constructor() {
-    this.loginGroup = new FormGroup({
-      username: new FormControl(),
-      pw: new FormControl(),
-      remember: new FormControl()
-    });
+  user: User;
+  constructor(private auth: AuthService,
+              private router: Router) {
   }
 
   ngOnInit() {
+    this.auth.getUserFromToken()
+      .subscribe(user => {
+      this.user = user;
+    });
   }
 
-  login() {
-
+  logout() {
+    this.auth.logout().subscribe(done => {
+      if (done) {
+        this.user = null;
+        this.router
+          .navigateByUrl('');
+      }
+    });
   }
+
 }

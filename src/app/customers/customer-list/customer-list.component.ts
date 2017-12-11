@@ -34,7 +34,6 @@ export class CustomerListComponent implements OnInit {
   }
 
   delete(customer: Customer, $event) {
-    console.log('delete Clicked');
     this.customerToDelete = customer;
     $event.stopPropagation();
   }
