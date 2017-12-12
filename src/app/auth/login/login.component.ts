@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 import {FormControl, FormGroup} from '@angular/forms';
-import {AuthService} from '../shared/auth.service';
+import {TokenService} from '../shared/token.service';
 import {Router} from '@angular/router';
+import {LoginService} from '../shared/login.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   loginGroup: FormGroup;
   constructor(config: NgbCarouselConfig,
-              private auth: AuthService,
+              private auth: LoginService,
               private router: Router) {
     this.loginGroup = new FormGroup({
       username: new FormControl(),

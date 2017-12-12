@@ -16,10 +16,11 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
-import {AuthService} from './auth/shared/auth.service';
+import {TokenService} from './auth/shared/token.service';
 import {AuthGuard} from './auth/guards/auth.guard';
 import { NoAccessComponent } from './shared/no-access/no-access.component';
 import {AdminGuard} from './auth/guards/admin.guard';
+import {LoginService} from "./auth/shared/login.service";
 
 const appRoutes: Routes = [
   { path: 'customer/:id',
@@ -83,7 +84,8 @@ const appRoutes: Routes = [
       useClass: AuthInterceptor,
       multi: true
     },
-    AuthService,
+    TokenService,
+    LoginService,
     AuthGuard,
     AdminGuard],
   bootstrap: [AppComponent]

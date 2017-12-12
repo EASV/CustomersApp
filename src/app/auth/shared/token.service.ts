@@ -2,40 +2,26 @@ import {Injectable, Injector} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/take';
 import {JwtHelper} from 'angular2-jwt';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {User} from './user.model';
 const url = environment.apiEndpoint + '/token';
 
 @Injectable()
-export class AuthService {
+export class TokenService {
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
   public getToken(): string {
     return localStorage.getItem('token');
   }
 
-  public login(user: User): Observable<string> {
-    const body = new HttpParams()
-      .set('username', user.username)
-      .set('password', user.password);
-
-    return this.http.post<any>(url, body.toString(), {
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application/x-www-form-urlencoded')
-      }
-    ).switchMap(token => Observable.create(obs => {
-      localStorage.setItem('token', token.value);
-      obs.next(token.value);
-    }));
+  public setToken(token: string) {
+    localStorage.setItem('token', token);
   }
 
-  public logout(): Observable<boolean> {
-    return Observable.create(obs => {
-      localStorage.removeItem('token');
-      obs.next(!this.getToken());
-    });
+  public clearToken() {
+    localStorage.removeItem('token');
   }
 
   public isAuthenticated(): Observable<boolean> {
